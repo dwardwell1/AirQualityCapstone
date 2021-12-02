@@ -2,9 +2,7 @@ CREATE TABLE `users` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `username` varchar(255) UNIQUE NOT NULL,
   `email` varchar(255) UNIQUE NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `emailAlerts` boolean NOT NULL,
-  `alertLevel` int
+  `password` varchar(255) NOT NULL
 );
 
 CREATE TABLE `locations` (
@@ -19,7 +17,8 @@ CREATE TABLE `locations` (
 CREATE TABLE `userLocations` (
   `user_id` int NOT NULL,
   `location_id` int NOT NULL,
-  `defaultLocale` boolean
+  `defaultLocale` boolean,
+  `emailAlerts` int
 );
 
 ALTER TABLE `userLocations` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
