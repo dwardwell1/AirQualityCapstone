@@ -134,6 +134,34 @@ class User {
 		return user;
 	}
 
+	static async getByName(username) {
+		const userRes = await db.query(
+			`SELECT username,
+                  email,
+                  default_locale as "defaultLocale",
+                  is_admin as "isAdmin"
+           FROM users
+           WHERE username = $1`,
+			[ username ]
+		);
+
+		const user = userRes.rows[0];
+
+		if (!user) throw new NotFoundError(`No user`);
+		let user_id = user.id;
+		// const userApplicationsRes = await db.query(
+		// 	`SELECT a.job_id
+		//        FROM applications AS a
+		//        WHERE a.username = $1`,
+		// 	[ username ]
+		// );
+
+		const getUserLocations = await db.query(`SELECT location_id FROM subs WHERE user_id = $1`, [ user_id ]);
+
+		user.locations = getUserLocations.rows.map((a) => a.location_id);
+		return user;
+	}
+
 	/** Update user data with `data`.
    *
    * This is a "partial update" --- it's fine if data doesn't contain

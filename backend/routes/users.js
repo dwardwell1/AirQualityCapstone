@@ -26,7 +26,7 @@ const router = express.Router();
  * Authorization required: admin
  **/
 
-router.post('/', ensureAdmin, async function(req, res, next) {
+router.post('/', async function(req, res, next) {
 	try {
 		const validator = jsonschema.validate(req.body, userNewSchema);
 		if (!validator.valid) {
@@ -66,9 +66,9 @@ router.get('/', async function(req, res, next) {
  * Authorization required: admin or same user-as-:username
  **/
 
-router.get('/:id', async function(req, res, next) {
+router.get('/:username', async function(req, res, next) {
 	try {
-		const user = await User.get(req.params.username);
+		const user = await User.getByName(req.params.username);
 		return res.json({ user });
 	} catch (err) {
 		return next(err);
@@ -120,15 +120,5 @@ router.delete('/:username', async function(req, res, next) {
  *
  * Authorization required: admin or same-user-as-:username
  * */
-
-router.post('/:username/jobs/:id', async function(req, res, next) {
-	try {
-		const jobId = +req.params.id;
-		await User.applyToJob(req.params.username, jobId);
-		return res.json({ applied: jobId });
-	} catch (err) {
-		return next(err);
-	}
-});
 
 module.exports = router;

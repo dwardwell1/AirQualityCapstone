@@ -77,6 +77,7 @@ router.post('/', async function(req, res, next) {
  * Authorization required: none
  */
 
+// M<ight not need this one
 router.get('/:user_id', async function(req, res, next) {
 	try {
 		const sub = await Sub.getSubs(req.params.user_id);
@@ -95,7 +96,7 @@ router.get('/:user_id', async function(req, res, next) {
  * Authorization required: admin
  */
 
-router.patch('/:user_id/:location_id', ensureAdmin, async function(req, res, next) {
+router.patch('/:user_id/:location_id', async function(req, res, next) {
 	try {
 		const validator = jsonschema.validate(req.body, jobUpdateSchema);
 		if (!validator.valid) {
@@ -115,7 +116,7 @@ router.patch('/:user_id/:location_id', ensureAdmin, async function(req, res, nex
  * Authorization required: admin
  */
 
-router.delete('/:user_id/:location_id', ensureAdmin, async function(req, res, next) {
+router.delete('/:user_id/:location_id', async function(req, res, next) {
 	try {
 		await Sub.remove(req.params.user_id, req.params.location_id);
 		return res.json({ deleted });
