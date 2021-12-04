@@ -1,0 +1,18 @@
+{"$schema": "http://json-schema.org/draft-07/schema#",
+"$id": "http://our.company.com/companyNew.schema.json",
+"type": "object",
+"properties": {
+
+ 
+  "emailAlerts":{
+    "type": "integer"
+  }
+  
+},
+"additionalProperties": false,
+"required": [
+ 
+  "emailAlerts"
+
+]
+}
