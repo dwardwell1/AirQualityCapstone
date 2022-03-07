@@ -16,3 +16,4 @@ CREATE DATABASE aq_test;
 \connect aq_test
 
 \i aq-schema.sql
+

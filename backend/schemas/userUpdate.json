@@ -22,8 +22,13 @@
       "maxLength": 60
     },
     "default_locale": {
-      "type": "integer"
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 5
     
+    },
+    "alerts": {
+      "type": "string"
     },
     "isAdmin": {
       "type": "boolean"

@@ -4,13 +4,15 @@ const BASE_URL_HISTORY = 'https://www.airnowapi.org/aq/forecast/zipCode/?format=
 
 const BASE_URL = 'https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&';
 
-const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+const API_KEY = `${process.env.REACT_APP_WEATHER_API_KEY}`;
+console.log(process.env.REACT_APP_WEATHER_API_KEY);
 
 /** API Class.
  *
  * Static class tying together methods used to get/send to to the API.
- * There shouldn't be any frontend-specific stuff here, and there shouldn't
- * be any API-aware stuff elsewhere in the frontend.
+ * Future functionality may include:
+ * - showing location history
+ * 
  *
  */
 
@@ -25,7 +27,7 @@ class AqApi {
 	static async request(endpoint, data = {}, method = 'get') {
 		console.debug('API Call:', endpoint, data, method);
 
-		const url = `${BASE_URL}/${endpoint}`;
+		const url = `${BASE_URL}${endpoint}`;
 		const params = method === 'get' ? data : {};
 
 		try {
@@ -37,19 +39,11 @@ class AqApi {
 		}
 	}
 
-	// static async getAirQuality(zipCode, distance = 25) {
-	// 	let res = await axios.get(BASE_URL + `zipCode=${zipCode}&distance=${distance}&API_KEY=${API_KEY}`);
-
-	// 	return res;
-	// }
-
-	static async getAirQuality(zipCode, distance = 25) {
+	static async getAqi(zipCode, distance = 25) {
 		let res = await this.request(`zipCode=${zipCode}&distance=${distance}&API_KEY=${API_KEY}`);
 
 		return res;
 	}
-	// }
-	// }
 
 	//add history API soon
 }

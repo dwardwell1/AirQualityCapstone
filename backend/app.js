@@ -1,6 +1,6 @@
 'use strict';
 
-/** Express app for jobly. */
+/** Express app for Air(Q). */
 
 const express = require('express');
 const cors = require('cors');
@@ -16,6 +16,8 @@ const subsRoutes = require('./routes/subs');
 const morgan = require('morgan');
 
 const app = express();
+const emailRouter = require('./routes/email-route');
+const email = require('./email');
 
 app.use(cors());
 app.use(express.json());
@@ -26,7 +28,9 @@ app.use('/auth', authRoutes);
 app.use('/locations', locationsRoutes);
 app.use('/users', usersRoutes);
 app.use('/subs', subsRoutes);
+app.use('/email', emailRouter);
 
+const schedule = require('node-schedule');
 /** Handle 404 errors -- this matches everything */
 app.use(function(req, res, next) {
 	return next(new NotFoundError());
@@ -43,4 +47,10 @@ app.use(function(err, req, res, next) {
 	});
 });
 
-module.exports = app;
+//*at reccurent interval
+schedule.scheduleJob('*/2 * * * *', function() {
+	console.log('we running');
+	email();
+});
+
+module.exports = app; // `SELECT email, zipcode FROM users JOIN locations on (users.default_locale = locations.id);`

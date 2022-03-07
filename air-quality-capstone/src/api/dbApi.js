@@ -5,8 +5,6 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 /** API Class.
  *
  * Static class tying together methods used to get/send to to the API.
- * There shouldn't be any frontend-specific stuff here, and there shouldn't
- * be any API-aware stuff elsewhere in the frontend.
  *
  */
 
@@ -39,13 +37,6 @@ class DatabaseApi {
 		return res.user;
 	}
 
-	/** Get companies (filtered by name if not undefined) */
-
-	// static async getCompanies(name) {
-	//   let res = await this.request("companies", { name });
-	//   return res.companies;
-	// }
-
 	/** Get token for login from username, password. */
 	static async login(data) {
 		let res = await this.request(`auth/token`, data, 'post');
@@ -66,78 +57,49 @@ class DatabaseApi {
 		return res.user;
 	}
 
-	/** Get details on a company by handle. */
-	/** Get details on a location by id. */
+	/** Delete user  */
+	static async deleteUser(id) {
+		let res = await this.request(`users/${id}`, {}, 'delete');
+		return res.user;
+	}
+
+	/** Get details on a location by id. (yet to be implemented) */
 
 	static async getLocation(id) {
 		let res = await this.request(`locations/${id}`);
 		return res.location;
 	}
-	// static async getCompany(handle) {
-	//   let res = await this.request(`companies/${handle}`);
-	//   return res.company;
-	// }
 
-	/** Get list of jobs (filtered by title if not undefined) */
+	/** Add location data (yet to be implemented) */
 
 	static async addLocation(data) {
 		let res = await this.request('locations', data, 'post');
 		return res.location;
 	}
-	// static async getJobs(title) {
-	//   let res = await this.request("jobs", { title });
-	//   return res.jobs;
-	// }
 
-	//make changes to location
+	/**make changes to location */
 	static async editLocation(id, data) {
 		let res = await this.request(`locations/${id}`, data, 'patch');
 		return res.location;
 	}
 
-	/** Apply to a job */
-	//Subscribe to new location
+	/**Subscribe to location */
 	static async subscribeToLocation(data) {
 		let res = await this.request(`subs`, data, 'post');
 		return res.sub;
 	}
 
-	//edit sub
+	/**Edit sub */
 	static async editSub(user_id, location_id, data) {
 		let res = await this.request(`subs/${user_id}/${location_id}`, data, 'patch');
 		return res.sub;
 	}
 
-	//delete sub
+	/** Delete Sub*/
 	static async deleteSub(user_id, location_id) {
 		let res = await this.request(`subs/${user_id}/${location_id}`, {}, 'delete');
 		return res.sub;
 	}
-
-	// static async applyToJob(username, id) {
-	//   await this.request(`users/${username}/jobs/${id}`, {}, "post");
-	// }
-
-	// /** Get token for login from username, password. */
-
-	// static async login(data) {
-	//   let res = await this.request(`auth/token`, data, "post");
-	//   return res.token;
-	// }
-
-	// /** Signup for site. */
-
-	// static async signup(data) {
-	//   let res = await this.request(`auth/register`, data, "post");
-	//   return res.token;
-	// }
-
-	// /** Save user profile page. */
-
-	// static async saveProfile(username, data) {
-	//   let res = await this.request(`users/${username}`, data, "patch");
-	//   return res.user;
-	// }
 }
 
 export default DatabaseApi;

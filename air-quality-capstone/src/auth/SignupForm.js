@@ -7,9 +7,9 @@ import Alert from '../common/Alert';
  * Shows form and manages update to state on changes.
  * On submission:
  * - calls signup function prop
- * - redirects to /companies route
+ * - redirects to homepage 
  *
- * Routes -> SignupForm -> Alert
+ * 
  * Routed as /signup
  */
 
@@ -18,7 +18,9 @@ function SignupForm({ signup }) {
 	const [ formData, setFormData ] = useState({
 		username: '',
 		email: '',
-		password: ''
+		password: '',
+		default_locale: '',
+		alerts: '0'
 	});
 	const [ formErrors, setFormErrors ] = useState([]);
 
@@ -26,7 +28,7 @@ function SignupForm({ signup }) {
 
 	/** Handle form submit:
    *
-   * Calls login func prop and, if successful, redirect to /companies.
+   * Calls login func prop and, if successful, redirect to home.
    */
 
 	async function handleSubmit(evt) {
@@ -71,6 +73,28 @@ function SignupForm({ signup }) {
 									value={formData.email}
 									onChange={handleChange}
 								/>
+							</div>
+							<div className="form-group">
+								<label>Zip Code</label>
+								<input
+									type="tel"
+									pattern="[0-9]*"
+									name="default_locale"
+									className="form-control"
+									value={formData.default_locale}
+									onChange={handleChange}
+								/>
+							</div>
+							<div className="form-group">
+								<label>Email Alert Level</label>
+								<select name="alerts" className="form-control" onChange={handleChange}>
+									<option value="0">None</option>
+									<option value="1">Moderate</option>
+									<option value="2">Unhealthy for Sensitive Groups (suggested)</option>
+									<option value="3">Unhealty </option>
+									<option value="4">Very Unhealthy</option>
+									<option value="5">Hazardous</option>
+								</select>
 							</div>
 							<div className="form-group">
 								<label>Password</label>

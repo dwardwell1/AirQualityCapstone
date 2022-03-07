@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Homepage pt-0 "
+  >
+    <div
+      class="container text-center"
+    >
+      <h1
+        class="mb-4 font-weight-bold"
+      >
+        Current Air Quality Search
+      </h1>
+      <p
+        class="lead"
+      >
+        Check your local air quality.
+      </p>
+      <div
+        class="LoginForm"
+      >
+        <div
+          class="container col-md-6 offset-md-3 col-lg-4 offset-lg-4"
+        >
+          <h3
+            class="mb-3"
+          >
+            AQI based on ZIP code
+          </h3>
+          <div
+            class="card "
+          >
+            <div
+              class="card-body"
+            >
+              <form>
+                <div
+                  class="form-group"
+                >
+                  <label>
+                    ZIP code
+                  </label>
+                  <input
+                    autocomplete="zipcode"
+                    class="form-control"
+                    name="zipcode"
+                    required=""
+                    value=""
+                  />
+                </div>
+                <button
+                  class="btn btn-primary float-right"
+                >
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h5
+        class="mt-5"
+      >
+        View 
+        <a
+          href="/subs"
+        >
+          Subscribed Location
+        </a>
+         AQ 
+      </h5>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`matches snapshot when logged out 1`] = `
+<DocumentFragment>
+  <div
+    class="Homepage pt-0 "
+  >
+    <div
+      class="container text-center"
+    >
+      <h1
+        class="mb-4 font-weight-bold"
+      >
+        Current Air Quality Search
+      </h1>
+      <p
+        class="lead"
+      >
+        Check your local air quality.
+      </p>
+      <div
+        class="LoginForm"
+      >
+        <div
+          class="container col-md-6 offset-md-3 col-lg-4 offset-lg-4"
+        >
+          <h3
+            class="mb-3"
+          >
+            AQI based on ZIP code
+          </h3>
+          <div
+            class="card "
+          >
+            <div
+              class="card-body"
+            >
+              <form>
+                <div
+                  class="form-group"
+                >
+                  <label>
+                    ZIP code
+                  </label>
+                  <input
+                    autocomplete="zipcode"
+                    class="form-control"
+                    name="zipcode"
+                    required=""
+                    value=""
+                  />
+                </div>
+                <button
+                  class="btn btn-primary float-right"
+                >
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p>
+        <a
+          class=" font-weight-bold"
+          href="/signup"
+        >
+          Sign up
+        </a>
+         for Email alerts or
+        <br />
+        <a
+          class=" font-weight-bold"
+          href="/login"
+        >
+          Login here
+        </a>
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;

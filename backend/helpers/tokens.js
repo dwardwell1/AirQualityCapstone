@@ -6,7 +6,6 @@ const { SECRET_KEY } = require('../config');
 function createToken(user) {
 	console.log('CAN WE SEE THIS');
 	console.assert(user.isAdmin !== undefined, 'createToken passed user without isAdmin property');
-	console.log(user.id, 'hellooo?????');
 
 	let payload = {
 		username: user.username,

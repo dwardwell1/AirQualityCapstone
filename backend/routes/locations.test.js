@@ -1,27 +1,27 @@
 'use strict';
 
-// const request = require("supertest");
+const request = require('supertest');
 
-// const app = require("../app");
+const app = require('../app');
 
-// const {
-//   commonBeforeAll,
-//   commonBeforeEach,
-//   commonAfterEach,
-//   commonAfterAll,
-//   testJobIds,
-//   u1Token,
-//   adminToken,
-// } = require("./_testCommon");
+const {
+	commonBeforeAll,
+	commonBeforeEach,
+	commonAfterEach,
+	commonAfterAll,
+	testLocationIds,
+	u1Token,
+	adminToken
+} = require('./_testCommon');
 
-// beforeAll(commonBeforeAll);
-// beforeEach(commonBeforeEach);
-// afterEach(commonAfterEach);
-// afterAll(commonAfterAll);
+beforeAll(commonBeforeAll);
+beforeEach(commonBeforeEach);
+afterEach(commonAfterEach);
+afterAll(commonAfterAll);
 
-// /************************************** POST /companies */
+// /************************************** POST /location */
 
-// describe("POST /companies", function () {
+// describe("POST /location", function () {
 //   const newCompany = {
 //     handle: "new",
 //     name: "New",
@@ -289,4 +289,3 @@
 //     expect(resp.statusCode).toEqual(404);
 //   });
 // });
-

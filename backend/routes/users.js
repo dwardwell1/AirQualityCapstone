@@ -58,6 +58,16 @@ router.get('/', async function(req, res, next) {
 	}
 });
 
+//getting emails of users with subs
+router.get('/emails', async function(req, res, next) {
+	try {
+		const users = await User.getEmails();
+		return res.json({ users });
+	} catch (err) {
+		return next(err);
+	}
+});
+
 /** GET /[username] => { user }
  *
  * Returns { username, firstName, lastName, isAdmin, jobs }
@@ -69,6 +79,7 @@ router.get('/', async function(req, res, next) {
 router.get('/:username', async function(req, res, next) {
 	try {
 		const user = await User.getByName(req.params.username);
+
 		return res.json({ user });
 	} catch (err) {
 		return next(err);
@@ -105,20 +116,13 @@ router.patch('/:id', async function(req, res, next) {
  * Authorization required: admin or same-user-as-:username
  **/
 
-router.delete('/:username', async function(req, res, next) {
+router.delete('/:id', async function(req, res, next) {
 	try {
-		await User.remove(req.params.username);
+		await User.remove(req.params.id);
 		return res.json({ deleted: req.params.username });
 	} catch (err) {
 		return next(err);
 	}
 });
-
-/** POST /[username]/jobs/[id]  { state } => { application }
- *
- * Returns {"applied": jobId}
- *
- * Authorization required: admin or same-user-as-:username
- * */
 
 module.exports = router;

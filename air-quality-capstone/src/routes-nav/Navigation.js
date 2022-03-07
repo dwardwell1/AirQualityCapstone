@@ -3,10 +3,10 @@ import { Link, NavLink } from 'react-router-dom';
 import UserContext from '../auth/UserContext';
 import './Navigation.css';
 
-/** Navigation bar for site. Shows up on every page.
+/** Navigation bar for site. S
  *
- * When user is logged in, shows links to main areas of site. When not,
- * shows link to Login and Signup forms.
+ * When user is logged in, shows links to main areas profile link and logout link.
+ * If not logged, shows link to Login and Signup forms.
  *
  * Rendered by App.
  */
@@ -17,15 +17,20 @@ function Navigation({ logout }) {
 
 	function loggedInNav() {
 		return (
-			<ul className="navbar-nav ml-auto">
+			<ul className="navbar-nav ml-auto  mx-2 justify-content-between font-weight-bold">
 				<li className="nav-item mr-4">
 					<NavLink className="nav-link" to="/aqi">
 						Air Quality
 					</NavLink>
 				</li>
 				<li className="nav-item mr-4">
+					<NavLink className="nav-link" to="/FAQ">
+						FAQs
+					</NavLink>
+				</li>
+				<li className="nav-item mr-4">
 					<NavLink className="nav-link" to="/fires">
-						Current Fires
+						Fire Tracker
 					</NavLink>
 				</li>
 				<li className="nav-item mr-4">
@@ -33,24 +38,36 @@ function Navigation({ logout }) {
 						Profile
 					</NavLink>
 				</li>
-				<li className="nav-item">
-					<Link className="nav-link" to="/" onClick={logout}>
-						Log out {currentUser.username}
-					</Link>
-				</li>
+				<div className="nav-item mr-4">
+					<li className="nav-item">
+						<Link className="nav-link" to="/" onClick={logout}>
+							Log out {currentUser.username}
+						</Link>
+					</li>
+				</div>
 			</ul>
 		);
 	}
 
 	function loggedOutNav() {
 		return (
-			<ul className="navbar-nav ml-auto">
+			<ul className="navbar-nav ml-auto mx-2">
+				<li className="nav-item mr-4">
+					<NavLink className="nav-link" to="/fires">
+						Fire Tracker
+					</NavLink>
+				</li>
+				<li className="nav-item mr-4">
+					<NavLink className="nav-link" to="/FAQ">
+						FAQs
+					</NavLink>
+				</li>
 				<li className="nav-item mr-4">
 					<NavLink className="nav-link" to="/login">
 						Login
 					</NavLink>
 				</li>
-				<li className="nav-item mr-4">
+				<li className="nav-item mr-8">
 					<NavLink className="nav-link" to="/signup">
 						Sign Up
 					</NavLink>
@@ -60,9 +77,9 @@ function Navigation({ logout }) {
 	}
 
 	return (
-		<nav className="Navigation navbar navbar-expand-md">
-			<Link className="navbar-brand" to="/">
-				Jobly
+		<nav className="navbar navbar-expand-md bg-light justify-content-between">
+			<Link className=" h1 navbar-brand mx-5 " to="/">
+				Air(Q)
 			</Link>
 			{currentUser ? loggedInNav() : loggedOutNav()}
 		</nav>

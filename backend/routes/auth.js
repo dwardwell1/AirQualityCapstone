@@ -63,5 +63,3 @@ router.post('/register', async function(req, res, next) {
 });
 
 module.exports = router;
-
-// token danny "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhbm55IiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTYzODUxMzcyMH0.MVuGLQi-gJarNNiefJxBkNBu1bUYiCqUvv0VGpINFrY"

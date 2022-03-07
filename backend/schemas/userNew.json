@@ -21,6 +21,12 @@
     },
     "isAdmin": {
       "type": "boolean"
+    },
+    
+    "defaultLocale": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 99999
     }
   },
   "additionalProperties": false,

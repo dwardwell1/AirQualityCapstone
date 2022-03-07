@@ -1,4 +1,4 @@
-const { BadRequestError } = require("../expressError");
+const { BadRequestError } = require('../expressError');
 
 /**
  * Helper for making selective update queries.
@@ -12,24 +12,21 @@ const { BadRequestError } = require("../expressError");
  *
  * @returns {Object} {sqlSetCols, dataToUpdate}
  *
- * @example {firstName: 'Aliya', age: 32} =>
- *   { setCols: '"first_name"=$1, "age"=$2',
- *     values: ['Aliya', 32] }
+ * @example {username: 'pa', default_locale: 95926} =>
+ *   { setCols: '"usermame"=$1, "default_locale"=$2',
+ *     values: ['pa', 95926] }
  */
 
 function sqlForPartialUpdate(dataToUpdate, jsToSql) {
-  const keys = Object.keys(dataToUpdate);
-  if (keys.length === 0) throw new BadRequestError("No data");
+	const keys = Object.keys(dataToUpdate);
+	if (keys.length === 0) throw new BadRequestError('No data');
 
-  // {firstName: 'Aliya', age: 32} => ['"first_name"=$1', '"age"=$2']
-  const cols = keys.map((colName, idx) =>
-      `"${jsToSql[colName] || colName}"=$${idx + 1}`,
-  );
+	const cols = keys.map((colName, idx) => `"${jsToSql[colName] || colName}"=$${idx + 1}`);
 
-  return {
-    setCols: cols.join(", "),
-    values: Object.values(dataToUpdate),
-  };
+	return {
+		setCols: cols.join(', '),
+		values: Object.values(dataToUpdate)
+	};
 }
 
 module.exports = { sqlForPartialUpdate };

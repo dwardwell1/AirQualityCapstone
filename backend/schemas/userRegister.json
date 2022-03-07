@@ -21,6 +21,19 @@
     },
     "isAdmin": {
       "type": "boolean"
+    },
+    "zipcode": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 99999
+    },
+    "default_locale": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 5
+    },
+    "alerts": {
+      "type": "string"
     }
   },
   "additionalProperties": false,

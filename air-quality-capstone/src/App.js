@@ -4,11 +4,11 @@ import { BrowserRouter } from 'react-router-dom';
 import useLocalStorage from './hooks/useLocalStorage';
 import Navigation from './routes-nav/Navigation';
 import Routes from './routes-nav/Routes';
-import LoadingSpinner from './common/LoadingSpinner';
 import DatabaseApi from './api/dbApi';
-// import AqApi from './api/aqApi';
+import AqApi from './api/aqApi';
 import UserContext from './auth/UserContext';
 import jwt from 'jsonwebtoken';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Key name for storing token in localStorage for "remember me" re-login
 export const TOKEN_STORAGE_ID = 'jobly-token';
@@ -33,6 +33,7 @@ function App() {
 	const [ subIds, setSubIds ] = useState(new Set([]));
 	const [ currentUser, setCurrentUser ] = useState(null);
 	const [ token, setToken ] = useLocalStorage(TOKEN_STORAGE_ID);
+	const [ aqiStats, setAqiStats ] = useState(null);
 
 	console.debug('App', 'infoLoaded=', infoLoaded, 'currentUser=', currentUser, 'token=', token);
 
@@ -109,21 +110,23 @@ function App() {
 		}
 	}
 
-	/** Checks if a job has been applied for. */
+	/** Checks if a location has been subscribed to (to be implemented in future). */
 	function hasSubbedToLocale(id) {
 		return subIds.has(id);
 	}
 
-	/** Apply to a job: make API call and update set of application IDs. */
-	// function applyToJob(id) {
-	//   if (hasAppliedToJob(id)) return;
-	//   JoblyApi.applyToJob(currentUser.username, id);
-	//   setApplicationIds(new Set([...applicationIds, id]));
-	// }
+	/** Sub to location (to be implemented). */
+
 	function subToLocale(data, location_id) {
 		if (hasSubbedToLocale()) return;
 		DatabaseApi.subscribeToLocation(data);
 		setSubIds(new Set([ ...subIds, location_id ]));
+	}
+
+	function getAqi(zip) {
+		AqApi.getAqi(zip).then((data) => {
+			setAqiStats(data);
+		});
 	}
 
 	if (!infoLoaded) return <p>Loading ...</p>;
@@ -133,7 +136,7 @@ function App() {
 			<UserContext.Provider value={{ currentUser, setCurrentUser, hasSubbedToLocale, subToLocale }}>
 				<div className="App">
 					<Navigation logout={logout} />
-					<Routes login={login} signup={signup} />
+					<Routes login={login} signup={signup} getAqi={getAqi} />
 				</div>
 			</UserContext.Provider>
 		</BrowserRouter>

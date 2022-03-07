@@ -1,13 +1,13 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Homepage from '../homepage/Homepage';
-import SubsList from '../companies&Locations/CompanyList';
-// import JobList from '../jobs/JobList';
-// import CompanyDetail from "../companies&Locations/CompanyDetail";
+import SubsList from '../AqiCards/SubsList';
 import LoginForm from '../auth/LoginForm';
 import ProfileForm from '../profiles/ProfileForm';
 import SignupForm from '../auth/SignupForm';
 import PrivateRoute from './PrivateRoute';
+import FireTracker from '../fireTracker/FireTracker';
+import Freq from './Faqs';
 
 /** Site-wide routes.
  *
@@ -17,14 +17,14 @@ import PrivateRoute from './PrivateRoute';
  * Visiting a non-existant route redirects to the homepage.
  */
 
-function Routes({ login, signup }) {
+function Routes({ login, signup, getAqi }) {
 	console.debug('Routes', `login=${typeof login}`, `register=${typeof register}`);
 
 	return (
-		<div className="pt-5">
+		<div className="">
 			<Switch>
 				<Route exact path="/">
-					<Homepage />
+					<Homepage getAqi={getAqi} />
 				</Route>
 
 				<Route exact path="/login">
@@ -35,13 +35,17 @@ function Routes({ login, signup }) {
 					<SignupForm signup={signup} />
 				</Route>
 
+				<Route exact path="/FAQ">
+					<Freq />
+				</Route>
+
 				<PrivateRoute exact path="/subs">
 					<SubsList />
 				</PrivateRoute>
 
-				{/* <PrivateRoute exact path="/fires">
-					<JobList />
-				</PrivateRoute> */}
+				<Route exact path="/fires">
+					<FireTracker />
+				</Route>
 
 				<PrivateRoute path="/profile">
 					<ProfileForm />

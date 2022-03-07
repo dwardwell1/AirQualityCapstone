@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Show loading spinner if loading 1`] = `
+<DocumentFragment>
+  <div
+    class="text-center mt-5"
+  >
+    <div
+      class="spinner-border"
+      style="width: 3rem; height: 3rem;"
+    >
+      <span
+        class="sr-only"
+      >
+        Air(Q)
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`matches snapshot with logo 1`] = `
+<DocumentFragment>
+  <div
+    class="text-center mt-5"
+  >
+    <div
+      class="spinner-border"
+      style="width: 3rem; height: 3rem;"
+    >
+      <span
+        class="sr-only"
+      >
+        Air(Q)
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`matches snapshot with zip 1`] = `
+<DocumentFragment>
+  <div
+    class="text-center mt-5"
+  >
+    <div
+      class="spinner-border"
+      style="width: 3rem; height: 3rem;"
+    >
+      <span
+        class="sr-only"
+      >
+        Air(Q)
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`matches snapshot without logo 1`] = `
+<DocumentFragment>
+  <div
+    class="text-center mt-5"
+  >
+    <div
+      class="spinner-border"
+      style="width: 3rem; height: 3rem;"
+    >
+      <span
+        class="sr-only"
+      >
+        Air(Q)
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;

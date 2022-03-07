@@ -51,7 +51,7 @@ class User {
    * Throws BadRequestError on duplicates.
    **/
 
-	static async register({ username, email, password, isAdmin }) {
+	static async register({ username, email, password, default_locale, alerts, isAdmin }) {
 		const duplicateCheck = await db.query(
 			`SELECT username
            FROM users
@@ -69,10 +69,10 @@ class User {
 			`INSERT INTO users
            (username,
             email,
-            password, is_admin)
-           VALUES ($1, $2, $3, $4)
-           RETURNING username, email`,
-			[ username, email, hashedPassword, isAdmin ]
+            password, default_locale,alerts, is_admin)
+           VALUES ($1, $2, $3, $4, $5, $6)
+           RETURNING username, email, is_admin`,
+			[ username, email, hashedPassword, default_locale, alerts, isAdmin ]
 		);
 
 		const user = result.rows[0];
@@ -108,9 +108,9 @@ class User {
 
 	static async get(id) {
 		const userRes = await db.query(
-			`SELECT username,
+			`SELECT id, username,
                   email,
-                  default_locale as "defaultLocale",
+                  default_locale as "defaultLocale", alerts,
                   is_admin as "isAdmin"
            FROM users
            WHERE id = $1`,
@@ -121,24 +121,19 @@ class User {
 
 		if (!user) throw new NotFoundError(`No user`);
 
-		// const userApplicationsRes = await db.query(
-		// 	`SELECT a.job_id
-		//        FROM applications AS a
-		//        WHERE a.username = $1`,
-		// 	[ username ]
-		// );
+		// to be added back later when we have the locations table
+		// const getUserLocations = await db.query(`SELECT location_id FROM subs WHERE user_id = $1`, [ id ]);
 
-		const getUserLocations = await db.query(`SELECT location_id FROM subs WHERE user_id = $1`, [ id ]);
-
-		user.locations = getUserLocations.rows.map((a) => a.location_id);
+		// user.locations = getUserLocations.rows.map((a) => a.location_id);
 		return user;
 	}
 
 	static async getByName(username) {
 		const userRes = await db.query(
-			`SELECT username,
+			`SELECT id, username,
                   email,
                   default_locale as "defaultLocale",
+				  alerts,
                   is_admin as "isAdmin"
            FROM users
            WHERE username = $1`,
@@ -149,15 +144,9 @@ class User {
 
 		if (!user) throw new NotFoundError(`No user`);
 		let user_id = user.id;
-		// const userApplicationsRes = await db.query(
-		// 	`SELECT a.job_id
-		//        FROM applications AS a
-		//        WHERE a.username = $1`,
-		// 	[ username ]
-		// );
 
 		const getUserLocations = await db.query(`SELECT location_id FROM subs WHERE user_id = $1`, [ user_id ]);
-
+		console.log('!!!!looking here now', getUserLocations.rows, 'user id is', user_id);
 		user.locations = getUserLocations.rows.map((a) => a.location_id);
 		return user;
 	}
@@ -183,7 +172,7 @@ class User {
 		if (data.password) {
 			data.password = await bcrypt.hash(data.password, BCRYPT_WORK_FACTOR);
 		}
-		console.log('hhellloo', id);
+		if (!data) throw new BadRequestError('No data');
 		const { setCols, values } = sqlForPartialUpdate(data, {
 			defaultLocale: 'default_locale',
 			isAdmin: 'is_admin'
@@ -194,12 +183,12 @@ class User {
                       SET ${setCols} 
                       WHERE id = ${usernameVarIdx} 
                       RETURNING username,
-                                email, default_locale, is_admin`;
+                                id, email, default_locale, alerts, is_admin`;
 
 		const result = await db.query(querySql, [ ...values, id ]);
 		const user = result.rows[0];
 
-		if (!user) throw new NotFoundError(`No user: ${username}`);
+		if (!user) throw new NotFoundError(`No user with that id`);
 
 		delete user.password;
 		return user;
@@ -207,31 +196,31 @@ class User {
 
 	/** Delete given user from database; returns undefined. */
 
-	static async remove(username) {
+	static async remove(id) {
 		let result = await db.query(
 			`DELETE
            FROM users
-           WHERE username = $1
+           WHERE id = $1
            RETURNING username`,
-			[ username ]
+			[ id ]
 		);
 		const user = result.rows[0];
 
-		if (!user) throw new NotFoundError(`No user: ${username}`);
+		if (!user) throw new NotFoundError(`No user with that id`);
 	}
 
-	/** Apply for job: update db, returns undefined.
+	/** Sub to a location.
    *
-   * - username: username applying for job
-   * - jobId: job id
+   * - user_id: id of user to sub to location
+   * - location_id: id of location to sub to
    **/
 
-	static async subLocation(username, locationId, defaultLocation = false, alertLevel = 3) {
+	static async subLocation(userId, locationId, defaultLocation = false, alertLevel = 3) {
 		const preCheck = await db.query(
-			`SELECT username
+			`SELECT id
        FROM users
-       WHERE username = $1`,
-			[ username ]
+       WHERE id = $1`,
+			[ userId ]
 		);
 		const user = preCheck.rows[0];
 
@@ -250,8 +239,18 @@ class User {
 		await db.query(
 			`INSERT INTO subs ( user_id, location_id, alert_level)
            VALUES ($1, $2, $3)`,
-			[ jobId, username, alertLevel ]
+			[ userId, locationId, alertLevel ]
 		);
+	}
+
+	/** get emails of those who sub'd for email updates */
+	static async getEmails() {
+		const result = await db.query(
+			// `SELECT email, zipcode FROM users JOIN locations on (users.default_locale = locations.id);`
+			`SELECT email, default_locale AS zipcode, alerts FROM users;`
+		);
+
+		return result.rows;
 	}
 }
 

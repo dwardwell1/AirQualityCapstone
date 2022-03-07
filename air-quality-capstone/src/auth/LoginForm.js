@@ -6,8 +6,8 @@ import Alert from '../common/Alert';
  *
  * Shows form and manages update to state on changes.
  * On submission:
- * - calls login function prop
- * - redirects to /companies route
+ * - calls login function 
+ * - redirects to /home 
  *
  * Routes -> LoginForm -> Alert
  * Routed as /login
@@ -25,7 +25,7 @@ function LoginForm({ login }) {
 
 	/** Handle form submit:
    *
-   * Calls login func prop and, if successful, redirect to /companies.
+   * Calls login func prop and, if successful, redirect to homepage.
    */
 
 	async function handleSubmit(evt) {
@@ -55,6 +55,7 @@ function LoginForm({ login }) {
 							<div className="form-group">
 								<label>Username</label>
 								<input
+									data-testid="username"
 									name="username"
 									className="form-control"
 									value={formData.username}
@@ -66,6 +67,7 @@ function LoginForm({ login }) {
 							<div className="form-group">
 								<label>Password</label>
 								<input
+									data-testid="password"
 									type="password"
 									name="password"
 									className="form-control"

@@ -17,14 +17,16 @@ CREATE TABLE users (
   email TEXT NOT NULL
     CHECK (position('@' IN email) > 1),
   password TEXT NOT NULL,
-  default_locale int REFERENCES locations,
+  default_locale int,
+  alerts int,
+  secondary int REFERENCES locations,
   is_admin BOOLEAN DEFAULT FALSE
 );
 
 
 CREATE TABLE subs (
   user_id int NOT NULL REFERENCES users ON DELETE CASCADE,
-  location_id int NOT NULL REFERENCES locations,
+  location_id int NOT NULL REFERENCES locations ON DELETE CASCADE,
   email_alerts int,
   PRIMARY KEY (user_id, location_id)
 );
