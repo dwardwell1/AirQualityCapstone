@@ -163,9 +163,7 @@ class User {
    *
    * Throws NotFoundError if not found.
    *
-   * WARNING: this function can set a new password or make a user an admin.
-   * Callers of this function must be certain they have validated inputs to this
-   * or a serious security risks are opened.
+\
    */
 
 	static async update(id, data) {

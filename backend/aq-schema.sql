@@ -14,7 +14,7 @@ CREATE TABLE locations (
 CREATE TABLE users (
   id SERIAL PRIMARY KEY,
   username TEXT UNIQUE NOT NULL,
-  email TEXT NOT NULL
+  email TEXT UNIQUE NOT NULL
     CHECK (position('@' IN email) > 1),
   password TEXT NOT NULL,
   default_locale int,
