@@ -46,21 +46,21 @@ class User {
 
 	/** Register user with data.
    *
-   * Returns { username, email }
+   * Returns { username, email, is_admin }
    *
    * Throws BadRequestError on duplicates.
    **/
 
 	static async register({ username, email, password, default_locale, alerts, isAdmin }) {
 		const duplicateCheck = await db.query(
-			`SELECT username
+			`SELECT email
            FROM users
-           WHERE username = $1`,
+           WHERE email = $1`,
 			[ username ]
 		);
 
 		if (duplicateCheck.rows[0]) {
-			throw new BadRequestError(`Duplicate username: ${username}`);
+			throw new BadRequestError(`Duplicate email: ${email}`);
 		}
 
 		const hashedPassword = await bcrypt.hash(password, BCRYPT_WORK_FACTOR);
@@ -100,8 +100,8 @@ class User {
 
 	/** Given a username, return data about user.
    *
-   * Returns { username, first_name, last_name, is_admin, jobs }
-   *   where jobs is { id, title, company_handle, company_name, state }
+   * Returns { username, email, default_locale, alerts, is_admin }
+   *   
    *
    * Throws NotFoundError if user not found.
    **/
@@ -128,6 +128,8 @@ class User {
 		return user;
 	}
 
+	//A function to get by username to compliment the ID retrieval function
+
 	static async getByName(username) {
 		const userRes = await db.query(
 			`SELECT id, username,
@@ -146,15 +148,13 @@ class User {
 		let user_id = user.id;
 
 		const getUserLocations = await db.query(`SELECT location_id FROM subs WHERE user_id = $1`, [ user_id ]);
-		console.log('!!!!looking here now', getUserLocations.rows, 'user id is', user_id);
 		user.locations = getUserLocations.rows.map((a) => a.location_id);
 		return user;
 	}
 
 	/** Update user data with `data`.
    *
-   * This is a "partial update" --- it's fine if data doesn't contain
-   * all the fields; this only changes provided ones.
+
    *
    * Data can include:
    *   { firstName, lastName, password, email, isAdmin }
@@ -213,7 +213,7 @@ class User {
    * - location_id: id of location to sub to
    **/
 
-	static async subLocation(userId, locationId, defaultLocation = false, alertLevel = 3) {
+	static async subLocation(userId, locationId, alertLevel = 3) {
 		const preCheck = await db.query(
 			`SELECT id
        FROM users
@@ -222,7 +222,7 @@ class User {
 		);
 		const user = preCheck.rows[0];
 
-		if (!user) throw new NotFoundError(`No username: ${username}`);
+		if (!user) throw new NotFoundError(`No such user: ${username}`);
 
 		const preCheck2 = await db.query(
 			`SELECT id
@@ -232,7 +232,7 @@ class User {
 		);
 		const location = preCheck2.rows[0];
 
-		if (!location) throw new NotFoundError(`No location: ${locationId}`);
+		if (!location) throw new NotFoundError(`No such location: ${locationId}`);
 
 		await db.query(
 			`INSERT INTO subs ( user_id, location_id, alert_level)

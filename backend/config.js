@@ -2,6 +2,7 @@
 
 /** Shared config for application; can be required many places. */
 
+//Dotenv gathers the keys and values in your env and loads them into process.env
 require('dotenv').config();
 require('colors');
 
@@ -13,9 +14,6 @@ const PORT = +process.env.PORT || 3001;
 function getDatabaseUri() {
 	return process.env.NODE_ENV === 'test' ? 'aq_test' : process.env.DATABASE_URL || 'aq';
 }
-
-// Speed up bcrypt during tests, since the algorithm safety isn't being tested
-//
 
 const BCRYPT_WORK_FACTOR = process.env.NODE_ENV === 'test' ? 1 : 12;
 

@@ -69,7 +69,7 @@ router.patch('/:user_id/:location_id', async function(req, res, next) {
 	}
 });
 
-/** DELETE /[handle]  =>  { deleted: id }
+/** DELETE /[sub]  =>  { deleted: id }
  *
  * Authorization required: admin
  */

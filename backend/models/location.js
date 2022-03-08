@@ -7,11 +7,11 @@ const { sqlForPartialUpdate } = require('../helpers/sql');
 /** Related functions for locations. */
 
 class Location {
-	/** Create a job (from data), update db, return new job data.
+	/** Create a location (from data), update db, return new location data.
    *
-   * data should be { title, salary, equity, companyHandle }
+   * data should be {zipcode, city, stateCode, lat, lng} (only zipcode is required)
    *
-   * Returns { id, title, salary, equity, companyHandle }
+   * Returns { id,zipcode } (for now)
    **/
 
 	// static async create(data) {
@@ -82,7 +82,7 @@ class Location {
 
 	/** Delete given location from database; returns undefined.
    *
-   * Throws NotFoundError if company not found.
+   * Throws NotFoundError if location not found.
    **/
 
 	static async remove(id) {

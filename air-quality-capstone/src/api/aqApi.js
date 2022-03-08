@@ -5,15 +5,12 @@ const BASE_URL_HISTORY = 'https://www.airnowapi.org/aq/forecast/zipCode/?format=
 const BASE_URL = 'https://www.airnowapi.org/aq/observation/zipCode/current/?format=application/json&';
 
 const API_KEY = `${process.env.REACT_APP_WEATHER_API_KEY}`;
-console.log(process.env.REACT_APP_WEATHER_API_KEY);
 
 /** API Class.
  *
  * Static class tying together methods used to get/send to to the API.
  * Future functionality may include:
  * - showing location history
- * 
- *
  */
 
 class AqApi {
@@ -44,8 +41,6 @@ class AqApi {
 
 		return res;
 	}
-
-	//add history API soon
 }
 
 export default AqApi;

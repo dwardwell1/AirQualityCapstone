@@ -36,7 +36,7 @@ function AqiCard({ zip }) {
 			{console.log('aqi', aqi)}
 			{aqi[1] ? (
 				<div className="">
-					<div className="container" className="mx-auto">
+					<div className="container mx-auto">
 						<h2>Reporting Location: {aqi[1].ReportingArea}</h2>
 						<hr className="mx-auto" />
 						<h4 className="mx-auto">Current AQI: {aqi[1].AQI}</h4>

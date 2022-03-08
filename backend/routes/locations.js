@@ -1,6 +1,6 @@
 'use strict'; //locations
 
-/** Routes for companies. */ const jsonschema = require('jsonschema');
+const jsonschema = require('jsonschema');
 const express = require('express');
 
 const { BadRequestError } = require('../expressError');
@@ -9,20 +9,14 @@ const Location = require('../models/location');
 
 const locationNewSchema = require('../schemas/locationNew.json');
 const locationUpdateSchema = require('../schemas/locationUpdate.json');
-// const companySearchSchema = require("../schemas/companySearch.json");
 
 const router = new express.Router();
 
-/** POST / { company } =>  { company }
+/** POST / Location
  *
- * company should be { handle, name, description, numEmployees, logoUrl }
- *
- * Returns { handle, name, description, numEmployees, logoUrl }
- *
- * Authorization required: admin
  */
 
-router.post('/', async function(req, res, next) {
+router.post('/', ensureLoggedIn, async function(req, res, next) {
 	try {
 		const validator = jsonschema.validate(req.body, locationNewSchema);
 		if (!validator.valid) {

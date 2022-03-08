@@ -55,7 +55,6 @@ function ProfileForm() {
 
 		let profileData = {
 			email: formData.email,
-
 			default_locale: formData.defaultLocale.toString(),
 			alerts: formData.alerts.toString()
 		};
@@ -69,14 +68,13 @@ function ProfileForm() {
 				profileData.alerts === currentUser.alerts) ||
 			isChanging == false
 		) {
-			alert('No Changes Made');
+			setFormErrors([ 'No changes have been made to your profile.' ]);
 			return;
 		}
 
 		try {
 			updatedUser = await dbApi.saveProfile(userId, profileData);
 		} catch (errors) {
-			// debugger;
 			setFormErrors(errors);
 			return;
 		}

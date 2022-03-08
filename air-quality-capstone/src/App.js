@@ -9,11 +9,12 @@ import AqApi from './api/aqApi';
 import UserContext from './auth/UserContext';
 import jwt from 'jsonwebtoken';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import CardLoad from './common/CardLoad';
 
 // Key name for storing token in localStorage for "remember me" re-login
 export const TOKEN_STORAGE_ID = 'jobly-token';
 
-/** Jobly application.
+/** Air(Q) application.
  *
  * - infoLoaded: has user data been pulled from API?
  *   (this manages spinner for "loading...")
@@ -129,7 +130,7 @@ function App() {
 		});
 	}
 
-	if (!infoLoaded) return <p>Loading ...</p>;
+	if (!infoLoaded) return <CardLoad />;
 
 	return (
 		<BrowserRouter>

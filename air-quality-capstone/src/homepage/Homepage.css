@@ -2,7 +2,7 @@
 
 .Homepage {
   /* vertical center */
-  height: calc(80vh - 150px);
+  height: calc(80vh - 160px);
   display: flex;
   align-items: center;
   

@@ -42,7 +42,7 @@ router.post('/', async function(req, res, next) {
 	}
 });
 
-/** GET / => { users: [ {username, firstName, lastName, email }, ... ] }
+/** GET / => { users: [ {username, email, is_admin}, ... ] }
  *
  * Returns list of all users.
  *
@@ -70,8 +70,8 @@ router.get('/emails', async function(req, res, next) {
 
 /** GET /[username] => { user }
  *
- * Returns { username, firstName, lastName, isAdmin, jobs }
- *   where jobs is { id, title, companyHandle, companyName, state }
+ * Returns { username, firstName, lastName, isAdmin, default_locale, alerts }
+ *   
  *
  * Authorization required: admin or same user-as-:username
  **/
@@ -89,9 +89,9 @@ router.get('/:username', async function(req, res, next) {
 /** PATCH /[username] { user } => { user }
  *
  * Data can include:
- *   { firstName, lastName, password, email }
+ *   { password, email, default_locale, alerts }
  *
- * Returns { username, firstName, lastName, email, isAdmin }
+ * Returns { username,  email, isAdmin, default_locale, alerts }
  *
  * Authorization required: admin or same-user-as-:username
  **/

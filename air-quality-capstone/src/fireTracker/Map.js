@@ -4,7 +4,6 @@ import LocationMarker from './LocationMarker';
 import LocationInfo from './LocationInfo';
 import './tracker.css';
 
-//Api Key to hide
 const API_KEY = `${process.env.REACT_APP_GOOGLE_MAPS}`;
 
 /** 

@@ -4,12 +4,13 @@ const db = require('../db');
 const { BadRequestError, NotFoundError } = require('../expressError');
 const { sqlForPartialUpdate } = require('../helpers/sql');
 
-/** Related functions for companies. */
+/** Related functions for subscriptions. */
 
 class Subs {
 	/** Create a subscription to ZIP code location, MAX 3 (to be implemented) */
 
 	static async create({ user_id, location_id, email_alerts = 0 }) {
+		// First check if the user already has subscribed to this location
 		const duplicateCheck = await db.query(
 			`SELECT user_id, location_id
            FROM subs
@@ -18,7 +19,7 @@ class Subs {
 		);
 
 		if (duplicateCheck.rows[0]) throw new BadRequestError(`Duplicate Subscription`);
-		console.log('hello', user_id, location_id, email_alerts);
+
 		const result = await db.query(
 			`INSERT INTO subs
            (user_id, location_id, email_alerts)
@@ -31,9 +32,7 @@ class Subs {
 		return subscription;
 	}
 
-	/** Find all subs with email alerts on
-   *
-   * 
+	/** Find all subs with email alerts on 
    * */
 
 	static async findAll() {
@@ -67,23 +66,16 @@ class Subs {
 
 		if (!defLoc) throw new NotFoundError(`No Default Set`);
 
-		//logic to check for multiople default locations here
+		//logic to check for multiple default locations here
 
 		return defLoc;
 	}
 
 	/** Update subs data with `data`.
-   *
- 
+   * No SqlforPartialUpdate here as email alerts are the only change possible. If you want to change location ID we need to delete and create a new one.
    */
 
 	static async update(userId, locationId, emailAlerts) {
-		const { setCols, values } = sqlForPartialUpdate(data, {
-			userId: 'user_id',
-			locationId: 'location_id'
-		});
-		const handleVarIdx = '$' + (values.length + 1);
-
 		const querySql = `UPDATE subs 
                       SET  email_alerts = $1
                       WHERE user_id = $2 AND location_id = $3
@@ -99,7 +91,7 @@ class Subs {
 
 	/** Delete subscription for user relation
    *
-   * Throws NotFoundError if company not found.
+   * Throws NotFoundError if sub not found.
    **/
 
 	static async remove(userid, locationId) {

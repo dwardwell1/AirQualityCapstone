@@ -16,12 +16,6 @@ async function commonBeforeAll() {
 
 	await db.query('DELETE FROM locations');
 
-	// await db.query(`
-	//   INSERT INTO users(username, email, default_locale, password, alerts)
-	//   VALUES ('test1', 'test1@gmail.com', 95921,'password', 1),
-	//   ('test2', 'test2@gmail.com', 95952,'password',2),
-	//   ('test3', 'test3@gmail.com', 11111,'password', 3)`);
-
 	const resultsLocations = await db.query(`
 	  INSERT INTO locations (zipcode, city)
 	  VALUES (69696, 'Palo Alto'),

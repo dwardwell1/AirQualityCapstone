@@ -29,7 +29,7 @@ function SubsList() {
 			let zip = await dbApi.getLocation(sub);
 			holder.push(zip.zipcode);
 		}
-		console.log('this is the holder', currentUser);
+		//Here we push the current users default locale before we implement our multiple location subscribing
 		holder.push(currentUser.defaultLocale);
 		setSubs(holder);
 	}

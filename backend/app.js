@@ -12,12 +12,13 @@ const authRoutes = require('./routes/auth');
 const locationsRoutes = require('./routes/locations');
 const usersRoutes = require('./routes/users');
 const subsRoutes = require('./routes/subs');
+const email = require('./email');
 
 const morgan = require('morgan');
 
 const app = express();
 const emailRouter = require('./routes/email-route');
-const email = require('./email');
+const schedule = require('node-schedule');
 
 app.use(cors());
 app.use(express.json());
@@ -30,8 +31,7 @@ app.use('/users', usersRoutes);
 app.use('/subs', subsRoutes);
 app.use('/email', emailRouter);
 
-const schedule = require('node-schedule');
-/** Handle 404 errors -- this matches everything */
+/** Handle 404 errors*/
 app.use(function(req, res, next) {
 	return next(new NotFoundError());
 });
@@ -47,10 +47,12 @@ app.use(function(err, req, res, next) {
 	});
 });
 
-//*at reccurent interval
+/*at reccurent interval
+send email to all users with email alerts on*/
+
 schedule.scheduleJob('*/2 * * * *', function() {
-	console.log('we running');
+	console.log('Emailing alerts', new Date());
 	email();
 });
 
-module.exports = app; // `SELECT email, zipcode FROM users JOIN locations on (users.default_locale = locations.id);`
+module.exports = app;
