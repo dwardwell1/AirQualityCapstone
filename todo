@@ -9,28 +9,6 @@ Hide made api key
 
 REVIEW higher order component
 
-make emails look better
+Things to study - 
 
-	{
-			"id": "EONET_6018",
-			"title": "Wildfire - N of Merced, California - United States",
-			"description": null,
-			"link": "https://eonet.gsfc.nasa.gov/api/v3/events/EONET_6018",
-			"closed": null,
-			"categories": [
-				{
-					"id": "wildfires",
-					"title": "Wildfires"
-				}
-
-	{
-			"id": "EONET_6018",
-			"title": "Wildfire - N of Merced, California - United States",
-			"description": "",
-			"link": "https://eonet.gsfc.nasa.gov/api/v2.1/events/EONET_6018",
-			"categories": [
-				{
-					"id": 8,
-					"title": "Wildfires"
-				}
-			]
+useEffect

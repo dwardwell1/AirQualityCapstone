@@ -23,11 +23,11 @@ CREATE TABLE users (
   is_admin BOOLEAN DEFAULT FALSE
 );
 
-
+-- composite key
 CREATE TABLE subs (
   user_id int NOT NULL REFERENCES users ON DELETE CASCADE,
   location_id int NOT NULL REFERENCES locations ON DELETE CASCADE,
   email_alerts int,
   PRIMARY KEY (user_id, location_id)
 );
-
+/

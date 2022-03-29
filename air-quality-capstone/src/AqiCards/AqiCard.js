@@ -32,11 +32,10 @@ function AqiCard({ zip }) {
 	if (!aqi) return <CardLoad />;
 
 	return (
-		<div className="jumbotron jumbtron-fluid mx-auto " style={{ width: '700px' }}>
-			{console.log('aqi', aqi)}
+		<div className="jumbotron jumbtron-fluid mx-auto ">
 			{aqi[1] ? (
 				<div className="">
-					<div className="container mx-auto">
+					<div className="container ">
 						<h2>Reporting Location: {aqi[1].ReportingArea}</h2>
 						<hr className="mx-auto" />
 						<h4 className="mx-auto">Current AQI: {aqi[1].AQI}</h4>

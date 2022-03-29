@@ -7,3 +7,19 @@
   align-items: center;
   
 }
+
+
+.container, .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+  width: 100%;
+  padding-right: var(--bs-gutter-x,.75rem);
+  padding-left: var(--bs-gutter-x,.75rem);
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: auto;
+}
+
+#log, #prof {
+  text-align: center;
+  margin-top: 1em;
+}
+

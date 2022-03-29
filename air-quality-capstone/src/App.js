@@ -17,7 +17,7 @@ export const TOKEN_STORAGE_ID = 'jobly-token';
 /** Air(Q) application.
  *
  * - infoLoaded: has user data been pulled from API?
- *   (this manages spinner for "loading...")
+ *   (this manages AQI Spinner)
  *
  * - currentUser: user obj from API. This becomes the canonical way to tell
  *   if someone is logged in. This is passed around via context throughout app.
@@ -64,9 +64,6 @@ function App() {
 				setInfoLoaded(true);
 			}
 
-			// set infoLoaded to false while async getCurrentUser runs; once the
-			// data is fetched (or even if an error happens!), this will be set back
-			// to false to control the spinner.
 			setInfoLoaded(false);
 			getCurrentUser();
 		},

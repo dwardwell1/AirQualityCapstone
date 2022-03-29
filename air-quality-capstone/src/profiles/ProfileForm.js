@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import Alert from '../common/Alert';
 import dbApi from '../api/dbApi';
 import UserContext from '../auth/UserContext';
+import '../homepage/Homepage.css';
 
 /** Profile editing form.
  *
@@ -109,7 +110,7 @@ function ProfileForm() {
 	}
 	return (
 		<div className="col-md-6 col-lg-4 offset-md-3 offset-lg-4">
-			<h3>Profile</h3>
+			<h3 id="prof">Profile</h3>
 			<div className="card">
 				<div className="card-body">
 					<form>
